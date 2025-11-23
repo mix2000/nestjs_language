@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { LanguageEntity } from '../../entity';
-import { ILanguageService } from '../../interfaces';
+import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 
 @Injectable()
 export class LanguageTypeormService implements ILanguageService {
@@ -17,11 +16,9 @@ export class LanguageTypeormService implements ILanguageService {
         return this.languageRepository.find();
     }
 
-    async findLanguagesByFilter(
-        filter: FindOptionsWhere<LanguageEntity>[] | FindOptionsWhere<LanguageEntity>,
-    ): Promise<LanguageEntity[]> {
+    async findLanguagesByFilter(filter: FilterOptions<ILanguage>): Promise<LanguageEntity[]> {
         return this.languageRepository.find({
-            where: filter,
+            where: filter as any,
         });
     }
 

@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { TranslationEntity } from '../../entity';
-import { ITranslationService } from '../../interfaces';
+import { FilterOptions, ITranslation, ITranslationService } from '../../interfaces';
 
 @Injectable()
 export class TranslationTypeormService implements ITranslationService {
@@ -20,11 +19,9 @@ export class TranslationTypeormService implements ITranslationService {
         return this.translationRepository.findOneBy({ id });
     }
 
-    async findTranslationByFilter(
-        filter: FindOptionsWhere<TranslationEntity>[] | FindOptionsWhere<TranslationEntity>,
-    ): Promise<TranslationEntity[]> {
+    async findTranslationByFilter(filter: FilterOptions<ITranslation>): Promise<TranslationEntity[]> {
         return this.translationRepository.find({
-            where: filter,
+            where: filter as any,
         });
     }
 
@@ -53,5 +50,57 @@ export class TranslationTypeormService implements ITranslationService {
         if (translation) {
             await this.translationRepository.remove(translation);
         }
+    }
+
+    async saveTranslations(
+        categoryType: string,
+        elementId: number,
+        fieldName: string,
+        translations?: Array<{ languageId: number; value: string }>,
+    ): Promise<void> {
+        if (!translations || translations.length === 0) {
+            return;
+        }
+
+        await Promise.all(
+            translations.map(async (translation) => {
+                return this.translationRepository.upsert(
+                    {
+                        categoryType,
+                        elementId,
+                        fieldName,
+                        languageId: translation.languageId,
+                        value: translation.value,
+                    },
+                    ['categoryType', 'elementId', 'fieldName', 'languageId'],
+                );
+            }),
+        );
+    }
+
+    async deleteTranslations(categoryType: string, elementId: number, fieldName?: string): Promise<void> {
+        const conditions: any = {
+            categoryType,
+            elementId,
+        };
+
+        if (fieldName) {
+            conditions.fieldName = fieldName;
+        }
+
+        await this.translationRepository.delete(conditions);
+    }
+
+    async deleteTranslationsBatch(categoryType: string, elementIds: number[]): Promise<void> {
+        if (!elementIds || elementIds.length === 0) {
+            return;
+        }
+
+        await this.translationRepository
+            .createQueryBuilder()
+            .delete()
+            .where('categoryType = :categoryType', { categoryType })
+            .andWhere('elementId IN (:...elementIds)', { elementIds })
+            .execute();
     }
 }

@@ -1,12 +1,11 @@
 import { Repository } from 'typeorm';
-import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { LanguageEntity } from '../../entity';
-import { ILanguageService } from '../../interfaces';
+import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 export declare class LanguageTypeormService implements ILanguageService {
     private languageRepository;
     constructor(languageRepository: Repository<LanguageEntity>);
     findAllLanguages(): Promise<LanguageEntity[]>;
-    findLanguagesByFilter(filter: FindOptionsWhere<LanguageEntity>[] | FindOptionsWhere<LanguageEntity>): Promise<LanguageEntity[]>;
+    findLanguagesByFilter(filter: FilterOptions<ILanguage>): Promise<LanguageEntity[]>;
     findLanguageById(id: number): Promise<LanguageEntity>;
     createLanguage(data: {
         name: string;

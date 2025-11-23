@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LanguageController = void 0;
 const common_1 = require("@nestjs/common");
-const service_1 = require("./service");
 const swagger_1 = require("./swagger");
 let LanguageController = class LanguageController {
     constructor(languageService) {
@@ -79,6 +78,7 @@ __decorate([
 ], LanguageController.prototype, "delete", null);
 exports.LanguageController = LanguageController = __decorate([
     (0, common_1.Controller)('languages'),
-    __metadata("design:paramtypes", [service_1.LanguageTypeormService])
+    __param(0, (0, common_1.Inject)('LANGUAGE_SERVICE')),
+    __metadata("design:paramtypes", [Object])
 ], LanguageController);
 //# sourceMappingURL=language.controller.js.map

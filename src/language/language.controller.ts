@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
-import { ILanguage } from './interfaces';
-import { LanguageTypeormService } from './service';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { ILanguage, ILanguageService } from './interfaces';
 import {
     SwaggerCreateLanguage,
     SwaggerDeleteLanguage,
@@ -11,7 +10,7 @@ import {
 
 @Controller('languages')
 export class LanguageController {
-    constructor(private languageService: LanguageTypeormService) {}
+    constructor(@Inject('LANGUAGE_SERVICE') private languageService: ILanguageService) {}
 
     @Get()
     @SwaggerFindAllLanguages()

@@ -1,8 +1,7 @@
-import { ILanguage } from './interfaces';
-import { LanguageTypeormService } from './service';
+import { ILanguage, ILanguageService } from './interfaces';
 export declare class LanguageController {
     private languageService;
-    constructor(languageService: LanguageTypeormService);
+    constructor(languageService: ILanguageService);
     findAll(): Promise<ILanguage[]>;
     findOne(id: string): Promise<ILanguage>;
     create(languageData: {
@@ -12,7 +11,7 @@ export declare class LanguageController {
     update(id: string, languageData: {
         name?: string;
         abbreviation?: string;
-    }): Promise<import("./entity").LanguageEntity>;
+    }): Promise<ILanguage>;
     delete(id: string): Promise<void>;
 }
 //# sourceMappingURL=language.controller.d.ts.map

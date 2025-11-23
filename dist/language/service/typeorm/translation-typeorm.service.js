@@ -48,6 +48,41 @@ let TranslationTypeormService = class TranslationTypeormService {
             await this.translationRepository.remove(translation);
         }
     }
+    async saveTranslations(categoryType, elementId, fieldName, translations) {
+        if (!translations || translations.length === 0) {
+            return;
+        }
+        await Promise.all(translations.map(async (translation) => {
+            return this.translationRepository.upsert({
+                categoryType,
+                elementId,
+                fieldName,
+                languageId: translation.languageId,
+                value: translation.value,
+            }, ['categoryType', 'elementId', 'fieldName', 'languageId']);
+        }));
+    }
+    async deleteTranslations(categoryType, elementId, fieldName) {
+        const conditions = {
+            categoryType,
+            elementId,
+        };
+        if (fieldName) {
+            conditions.fieldName = fieldName;
+        }
+        await this.translationRepository.delete(conditions);
+    }
+    async deleteTranslationsBatch(categoryType, elementIds) {
+        if (!elementIds || elementIds.length === 0) {
+            return;
+        }
+        await this.translationRepository
+            .createQueryBuilder()
+            .delete()
+            .where('categoryType = :categoryType', { categoryType })
+            .andWhere('elementId IN (:...elementIds)', { elementIds })
+            .execute();
+    }
 };
 exports.TranslationTypeormService = TranslationTypeormService;
 exports.TranslationTypeormService = TranslationTypeormService = __decorate([

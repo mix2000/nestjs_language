@@ -14,6 +14,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// TypeORM services
 __exportStar(require("./typeorm/language-typeorm.service"), exports);
 __exportStar(require("./typeorm/translation-typeorm.service"), exports);
+// Sequelize services
+__exportStar(require("./sequelize/language-sequelize.service"), exports);
+__exportStar(require("./sequelize/translation-sequelize.service"), exports);
 //# sourceMappingURL=index.js.map
