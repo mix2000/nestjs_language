@@ -1,24 +1,40 @@
 {
     "name": "ozma-nestjs-language",
-    "version": "0.0.6",
-    "description": "",
+    "version": "0.0.8",
+    "description": "NestJS module for managing languages and translations with TypeORM and Sequelize support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "rimraf dist && tsc",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts",
+        "prepublishOnly": "npm run lint && npm run build"
     },
+    "files": [
+        "dist",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE"
+    ],
     "keywords": [
         "nestjs",
-        "crud",
+        "typeorm",
         "sequelize",
-        "prisma"
+        "i18n",
+        "internationalization",
+        "translations",
+        "multilingual",
+        "languages"
     ],
     "author": "Michael Gorbachev",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mix2000/nestjs_language.git"
+    },
     "bugs": {
         "url": "https://github.com/mix2000/nestjs_language/issues"
     },
+    "homepage": "https://github.com/mix2000/nestjs_language#readme",
     "engines": {
         "node": ">=18.12.0"
     },
