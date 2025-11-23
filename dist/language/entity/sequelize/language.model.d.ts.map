@@ -1,0 +1,1 @@
+{"version":3,"file":"language.model.d.ts","sourceRoot":"","sources":["../../../../src/language/entity/sequelize/language.model.ts"],"names":[],"mappings":"AAAA,OAAO,EAAmC,KAAK,EAAqB,MAAM,sBAAsB,CAAC;AACjG,OAAO,EAAE,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAE7C,qBAIa,aAAc,SAAQ,KAAK,CAAC,aAAa,CAAE,YAAW,SAAS;IAQxE,EAAE,EAAG,MAAM,CAAC;IAOZ,IAAI,EAAE,MAAM,CAAC;IAOb,YAAY,EAAE,MAAM,CAAC;CACxB"}
