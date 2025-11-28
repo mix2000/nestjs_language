@@ -1,14 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { DynamicModule, Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { LanguageEntity, LanguageModel, TranslationEntity, TranslationModel } from './entity';
 import { LanguageController } from './language.controller';
-import {
-    LanguageSequelizeService,
-    LanguageTypeormService,
-    TranslationSequelizeService,
-    TranslationTypeormService,
-} from './service';
 
 export interface LanguageModuleOptions {
     orm: 'typeorm' | 'sequelize';
@@ -22,6 +14,27 @@ export class LanguageModule {
         const exports = [];
 
         if (options.orm === 'typeorm') {
+            // Ленивая загрузка TypeORM зависимостей
+            let TypeOrmModule: any;
+            let LanguageEntity: any;
+            let TranslationEntity: any;
+            let LanguageTypeormService: any;
+            let TranslationTypeormService: any;
+
+            try {
+                TypeOrmModule = require('@nestjs/typeorm').TypeOrmModule;
+                const entities = require('./entity');
+                LanguageEntity = entities.LanguageEntity;
+                TranslationEntity = entities.TranslationEntity;
+                const services = require('./service');
+                LanguageTypeormService = services.LanguageTypeormService;
+                TranslationTypeormService = services.TranslationTypeormService;
+            } catch (error) {
+                throw new Error(
+                    'TypeORM dependencies are not installed. Please install: npm install @nestjs/typeorm typeorm',
+                );
+            }
+
             imports.push(TypeOrmModule.forFeature([LanguageEntity, TranslationEntity]));
             providers.push(
                 {
@@ -37,6 +50,27 @@ export class LanguageModule {
             );
             exports.push(LanguageTypeormService, TranslationTypeormService, 'LANGUAGE_SERVICE', 'TRANSLATION_SERVICE');
         } else if (options.orm === 'sequelize') {
+            // Ленивая загрузка Sequelize зависимостей
+            let SequelizeModule: any;
+            let LanguageModel: any;
+            let TranslationModel: any;
+            let LanguageSequelizeService: any;
+            let TranslationSequelizeService: any;
+
+            try {
+                SequelizeModule = require('@nestjs/sequelize').SequelizeModule;
+                const models = require('./entity');
+                LanguageModel = models.LanguageModel;
+                TranslationModel = models.TranslationModel;
+                const services = require('./service');
+                LanguageSequelizeService = services.LanguageSequelizeService;
+                TranslationSequelizeService = services.TranslationSequelizeService;
+            } catch (error) {
+                throw new Error(
+                    'Sequelize dependencies are not installed. Please install: npm install @nestjs/sequelize sequelize sequelize-typescript',
+                );
+            }
+
             imports.push(SequelizeModule.forFeature([LanguageModel, TranslationModel]));
             providers.push(
                 {
