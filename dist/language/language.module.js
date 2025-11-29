@@ -25,10 +25,10 @@ let LanguageModule = LanguageModule_1 = class LanguageModule {
             let TranslationTypeormService;
             try {
                 TypeOrmModule = require('@nestjs/typeorm').TypeOrmModule;
-                const entities = require('./entity');
+                const entities = require('./entity/typeorm');
                 LanguageEntity = entities.LanguageEntity;
                 TranslationEntity = entities.TranslationEntity;
-                const services = require('./service');
+                const services = require('./service/typeorm');
                 LanguageTypeormService = services.LanguageTypeormService;
                 TranslationTypeormService = services.TranslationTypeormService;
             }
@@ -54,10 +54,10 @@ let LanguageModule = LanguageModule_1 = class LanguageModule {
             let TranslationSequelizeService;
             try {
                 SequelizeModule = require('@nestjs/sequelize').SequelizeModule;
-                const models = require('./entity');
+                const models = require('./entity/sequelize');
                 LanguageModel = models.LanguageModel;
                 TranslationModel = models.TranslationModel;
-                const services = require('./service');
+                const services = require('./service/sequelize');
                 LanguageSequelizeService = services.LanguageSequelizeService;
                 TranslationSequelizeService = services.TranslationSequelizeService;
             }
