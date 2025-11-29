@@ -1,6 +1,6 @@
 {
     "name": "ozma-nestjs-language",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "NestJS module for managing languages and translations with TypeORM and Sequelize support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

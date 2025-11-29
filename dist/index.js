@@ -14,22 +14,24 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TranslationSequelizeService = exports.LanguageSequelizeService = exports.TranslationTypeormService = exports.LanguageTypeormService = exports.LanguageModule = void 0;
+exports.LanguageController = exports.LanguageModule = void 0;
 // Module
 var language_module_1 = require("./language/language.module");
 Object.defineProperty(exports, "LanguageModule", { enumerable: true, get: function () { return language_module_1.LanguageModule; } });
-// TypeORM Services
-var language_typeorm_service_1 = require("./language/service/typeorm/language-typeorm.service");
-Object.defineProperty(exports, "LanguageTypeormService", { enumerable: true, get: function () { return language_typeorm_service_1.LanguageTypeormService; } });
-var translation_typeorm_service_1 = require("./language/service/typeorm/translation-typeorm.service");
-Object.defineProperty(exports, "TranslationTypeormService", { enumerable: true, get: function () { return translation_typeorm_service_1.TranslationTypeormService; } });
-// Sequelize Services
-var language_sequelize_service_1 = require("./language/service/sequelize/language-sequelize.service");
-Object.defineProperty(exports, "LanguageSequelizeService", { enumerable: true, get: function () { return language_sequelize_service_1.LanguageSequelizeService; } });
-var translation_sequelize_service_1 = require("./language/service/sequelize/translation-sequelize.service");
-Object.defineProperty(exports, "TranslationSequelizeService", { enumerable: true, get: function () { return translation_sequelize_service_1.TranslationSequelizeService; } });
 // Interfaces
 __exportStar(require("./language/interfaces"), exports);
-// Entities & Models
-__exportStar(require("./language/entity"), exports);
+// Controller
+var language_controller_1 = require("./language/language.controller");
+Object.defineProperty(exports, "LanguageController", { enumerable: true, get: function () { return language_controller_1.LanguageController; } });
+/**
+ * ВАЖНО: Сервисы и модели не экспортируются напрямую, чтобы избежать загрузки ненужных зависимостей.
+ *
+ * Используйте инъекцию через токены:
+ * @Inject('LANGUAGE_SERVICE') private languageService: ILanguageService
+ * @Inject('TRANSLATION_SERVICE') private translationService: ITranslationService
+ *
+ * Если вам нужен прямой доступ к конкретной реализации:
+ * - TypeORM: import { LanguageTypeormService } from 'ozma-nestjs-language/dist/language/service/typeorm/language-typeorm.service'
+ * - Sequelize: import { LanguageSequelizeService } from 'ozma-nestjs-language/dist/language/service/sequelize/language-sequelize.service'
+ */
 //# sourceMappingURL=index.js.map
