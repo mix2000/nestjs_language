@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { LanguageEntity } from '../../entity';
+import { LanguageEntity } from '../../entity/typeorm';
 import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 export declare class LanguageTypeormService implements ILanguageService {
     private languageRepository;

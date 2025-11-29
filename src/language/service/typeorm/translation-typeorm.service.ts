@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TranslationEntity } from '../../entity';
+import { TranslationEntity } from '../../entity/typeorm';
 import { FilterOptions, ITranslation, ITranslationService } from '../../interfaces';
 
 @Injectable()

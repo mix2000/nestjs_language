@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { TranslationEntity } from '../../entity';
+import { TranslationEntity } from '../../entity/typeorm';
 import { FilterOptions, ITranslation, ITranslationService } from '../../interfaces';
 export declare class TranslationTypeormService implements ITranslationService {
     private translationRepository;

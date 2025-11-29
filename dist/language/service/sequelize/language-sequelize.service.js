@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LanguageSequelizeService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const entity_1 = require("../../entity");
+const sequelize_2 = require("../../entity/sequelize");
 let LanguageSequelizeService = class LanguageSequelizeService {
     constructor(languageModel) {
         this.languageModel = languageModel;
@@ -57,7 +57,7 @@ let LanguageSequelizeService = class LanguageSequelizeService {
 exports.LanguageSequelizeService = LanguageSequelizeService;
 exports.LanguageSequelizeService = LanguageSequelizeService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, sequelize_1.InjectModel)(entity_1.LanguageModel)),
+    __param(0, (0, sequelize_1.InjectModel)(sequelize_2.LanguageModel)),
     __metadata("design:paramtypes", [Object])
 ], LanguageSequelizeService);
 //# sourceMappingURL=language-sequelize.service.js.map

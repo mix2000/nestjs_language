@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TranslationSequelizeService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
-const entity_1 = require("../../entity");
+const sequelize_2 = require("../../entity/sequelize");
 let TranslationSequelizeService = class TranslationSequelizeService {
     constructor(translationModel) {
         this.translationModel = translationModel;
@@ -94,7 +94,7 @@ let TranslationSequelizeService = class TranslationSequelizeService {
 exports.TranslationSequelizeService = TranslationSequelizeService;
 exports.TranslationSequelizeService = TranslationSequelizeService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, sequelize_1.InjectModel)(entity_1.TranslationModel)),
+    __param(0, (0, sequelize_1.InjectModel)(sequelize_2.TranslationModel)),
     __metadata("design:paramtypes", [Object])
 ], TranslationSequelizeService);
 //# sourceMappingURL=translation-sequelize.service.js.map

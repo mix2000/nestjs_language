@@ -1,7 +1,12 @@
-// TypeORM services
-export * from './typeorm/language-typeorm.service';
-export * from './typeorm/translation-typeorm.service';
-
-// Sequelize services
-export * from './sequelize/language-sequelize.service';
-export * from './sequelize/translation-sequelize.service';
+/**
+ * ⚠️ IMPORTANT: This file intentionally left empty
+ *
+ * DO NOT export TypeORM and Sequelize services together!
+ * This would load ALL ORM dependencies even when only one is used.
+ *
+ * To import services:
+ * - TypeORM: import from './service/typeorm'
+ * - Sequelize: import from './service/sequelize'
+ *
+ * See: language.module.ts for correct usage with lazy loading
+ */

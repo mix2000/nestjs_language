@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { LanguageModel } from '../../entity';
+import { LanguageModel } from '../../entity/sequelize';
 import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 
 @Injectable()

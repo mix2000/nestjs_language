@@ -1,4 +1,4 @@
-import { TranslationModel } from '../../entity';
+import { TranslationModel } from '../../entity/sequelize';
 import { FilterOptions, ITranslation, ITranslationService } from '../../interfaces';
 export declare class TranslationSequelizeService implements ITranslationService {
     private translationModel;

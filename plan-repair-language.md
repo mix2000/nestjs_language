@@ -1,5 +1,7 @@
 # Исправление пакета ozma-nestjs-language
 
+**Статус**: ✅ Исправлено в v0.0.13
+
 ## Проблема
 
 При использовании `LanguageModule.forRoot({ orm: 'sequelize' })` приложение падает с ошибкой:
@@ -19,14 +21,14 @@ try {
     SequelizeModule = require('@nestjs/sequelize').SequelizeModule;
     const models = require('./entity');  // ← ПРОБЛЕМА ЗДЕСЬ
     LanguageModel = models.LanguageModel;
-    TranslationModel = models.TranslationModel;
+    const services = require('./service');  // ← И ЗДЕСЬ
     // ...
 } catch (error) {
     throw new Error('Sequelize dependencies are not installed...');
 }
 ```
 
-Файл `entity/index.ts` экспортирует ВСЕ модели:
+### Файл 1: `src/language/entity/index.ts`
 
 ```typescript
 // TypeORM entities
@@ -37,65 +39,85 @@ export * from './sequelize/language.model';
 export * from './sequelize/translation.model';
 ```
 
-При `require('./entity')` Node.js загружает TypeORM entities, которые используют декораторы из `typeorm`. Если `typeorm` не установлен — падает ошибка. Но catch блок выбрасывает неправильное сообщение про Sequelize.
+### Файл 2: `src/language/service/index.ts`
 
-## Решение
+```typescript
+// TypeORM services
+export * from './typeorm/language-typeorm.service';      // ← требует typeorm
+export * from './typeorm/translation-typeorm.service';   // ← требует typeorm
+// Sequelize services  
+export * from './sequelize/language-sequelize.service';
+export * from './sequelize/translation-sequelize.service';
+```
 
-### Вариант 1: Раздельные экспорты (рекомендуется)
+**При `require('./entity')` или `require('./service')` Node.js загружает ВСЕ экспорты, включая TypeORM файлы которые используют декораторы из `typeorm`.**
 
-Создать отдельные файлы экспорта:
+## Решение (КОНКРЕТНЫЕ ИЗМЕНЕНИЯ)
 
-**`entity/sequelize/index.ts`**:
+### Шаг 1: Создать `src/language/entity/sequelize/index.ts`
+
 ```typescript
 export * from './language.model';
 export * from './translation.model';
 ```
 
-**`entity/typeorm/index.ts`**:
+### Шаг 2: Создать `src/language/entity/typeorm/index.ts`
+
 ```typescript
 export * from './language.entity';
 export * from './translation.entity';
 ```
 
-**`language.module.ts`** — импортировать напрямую:
-```typescript
-// Для Sequelize
-const { LanguageModel, TranslationModel } = require('./entity/sequelize');
-
-// Для TypeORM
-const { LanguageEntity, TranslationEntity } = require('./entity/typeorm');
-```
-
-### Вариант 2: Динамический импорт с проверкой
+### Шаг 3: Создать `src/language/service/sequelize/index.ts`
 
 ```typescript
-if (options.orm === 'sequelize') {
-    try {
-        SequelizeModule = require('@nestjs/sequelize').SequelizeModule;
-    } catch {
-        throw new Error('@nestjs/sequelize is not installed');
-    }
-    
-    try {
-        const { LanguageModel, TranslationModel } = require('./entity/sequelize');
-        // ...
-    } catch (e) {
-        throw new Error(`Failed to load Sequelize models: ${e.message}`);
-    }
-}
+export * from './language-sequelize.service';
+export * from './translation-sequelize.service';
 ```
 
-### Вариант 3: Удалить общий entity/index.ts
+### Шаг 4: Создать `src/language/service/typeorm/index.ts`
 
-Убрать файл `entity/index.ts` полностью и импортировать модели напрямую из подпапок.
+```typescript
+export * from './language-typeorm.service';
+export * from './translation-typeorm.service';
+```
 
-## Дополнительно
+### Шаг 5: Изменить `src/language/language.module.ts`
 
-Аналогичная проблема может быть в `service/index.ts` — нужно проверить и исправить таким же образом.
+**Было:**
+```typescript
+const models = require('./entity');
+const services = require('./service');
+```
 
-## Тесты
+**Стало:**
+```typescript
+// Для Sequelize:
+const models = require('./entity/sequelize');
+const services = require('./service/sequelize');
 
-После исправления проверить:
+// Для TypeORM:
+const models = require('./entity/typeorm');
+const services = require('./service/typeorm');
+```
+
+### Шаг 6: Удалить или оставить пустыми
+
+- `src/language/entity/index.ts` — НЕ должен экспортировать TypeORM и Sequelize вместе
+- `src/language/service/index.ts` — НЕ должен экспортировать TypeORM и Sequelize вместе
+
+Можно оставить только интерфейсы:
+```typescript
+// entity/index.ts
+export * from './sequelize';  // НЕЛЬЗЯ! Это загрузит sequelize
+export * from './typeorm';    // НЕЛЬЗЯ! Это загрузит typeorm
+
+// Правильно - вообще убрать этот файл или оставить пустым
+```
+
+---
+
+## Тесты после исправления
 1. `orm: 'sequelize'` работает БЕЗ установленного typeorm
 2. `orm: 'typeorm'` работает БЕЗ установленного sequelize
 3. Оба ORM работают когда обе зависимости установлены

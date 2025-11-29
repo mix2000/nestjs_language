@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LanguageEntity } from '../../entity';
+import { LanguageEntity } from '../../entity/typeorm';
 import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 
 @Injectable()

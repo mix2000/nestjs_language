@@ -1,4 +1,4 @@
-import { LanguageModel } from '../../entity';
+import { LanguageModel } from '../../entity/sequelize';
 import { FilterOptions, ILanguage, ILanguageService } from '../../interfaces';
 export declare class LanguageSequelizeService implements ILanguageService {
     private languageModel;

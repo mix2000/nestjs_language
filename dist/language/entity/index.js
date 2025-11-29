@@ -1,23 +1,14 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-// TypeORM entities
-__exportStar(require("./typeorm/language.entity"), exports);
-__exportStar(require("./typeorm/translation.entity"), exports);
-// Sequelize models
-__exportStar(require("./sequelize/language.model"), exports);
-__exportStar(require("./sequelize/translation.model"), exports);
+/**
+ * ⚠️ IMPORTANT: This file intentionally left empty
+ *
+ * DO NOT export TypeORM and Sequelize models together!
+ * This would load ALL ORM dependencies even when only one is used.
+ *
+ * To import models:
+ * - TypeORM: import from './entity/typeorm'
+ * - Sequelize: import from './entity/sequelize'
+ *
+ * See: language.module.ts for correct usage with lazy loading
+ */
 //# sourceMappingURL=index.js.map

@@ -16,7 +16,7 @@ exports.LanguageTypeormService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const entity_1 = require("../../entity");
+const typeorm_3 = require("../../entity/typeorm");
 let LanguageTypeormService = class LanguageTypeormService {
     constructor(languageRepository) {
         this.languageRepository = languageRepository;
@@ -53,7 +53,7 @@ let LanguageTypeormService = class LanguageTypeormService {
 exports.LanguageTypeormService = LanguageTypeormService;
 exports.LanguageTypeormService = LanguageTypeormService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(entity_1.LanguageEntity)),
+    __param(0, (0, typeorm_1.InjectRepository)(typeorm_3.LanguageEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], LanguageTypeormService);
 //# sourceMappingURL=language-typeorm.service.js.map

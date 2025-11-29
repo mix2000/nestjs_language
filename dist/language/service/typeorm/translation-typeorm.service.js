@@ -16,7 +16,7 @@ exports.TranslationTypeormService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const entity_1 = require("../../entity");
+const typeorm_3 = require("../../entity/typeorm");
 let TranslationTypeormService = class TranslationTypeormService {
     constructor(translationRepository) {
         this.translationRepository = translationRepository;
@@ -87,7 +87,7 @@ let TranslationTypeormService = class TranslationTypeormService {
 exports.TranslationTypeormService = TranslationTypeormService;
 exports.TranslationTypeormService = TranslationTypeormService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(entity_1.TranslationEntity)),
+    __param(0, (0, typeorm_1.InjectRepository)(typeorm_3.TranslationEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], TranslationTypeormService);
 //# sourceMappingURL=translation-typeorm.service.js.map
